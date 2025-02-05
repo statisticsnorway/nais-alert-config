@@ -1,0 +1,28 @@
+name: Deploy alerts
+run-name: Deploy AlertmanagerConfig
+description: Common AlertmanagerConfig for NAIS services in 'dapla-stat'
+
+## NOTE! This config only deploys when consumers of this workflow deploys alerts.
+
+on:
+  workflow_call:
+    inputs:
+      cluster:
+        required: true
+        type: string
+permissions:
+  id-token: write
+
+jobs:
+  deploy:
+    name: Deploy alert config to ${{ inputs.cluster }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deploy to ${{ inputs.cluster }}
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: ${{ inputs.cluster }}
+          RESOURCE: apps/nais/alertconfig.yaml
+          DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443
