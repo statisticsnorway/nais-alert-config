@@ -17,5 +17,5 @@ runs:
       uses: nais/deploy/actions/deploy@v2
       env:
         CLUSTER: ${{ inputs.cluster }}
-        RESOURCE: apps/nais/alertconfig.yaml
+        RESOURCE: ${{ github.action_path }}/apps/nais/alertconfig.yaml
         DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443
