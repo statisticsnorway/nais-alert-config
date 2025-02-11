@@ -17,18 +17,18 @@ spec:
           username: "NAIS Alert"
           sendResolved: true
           title: |-
-            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
+            [{{{{raw}}}}{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}{{{{/raw}}}}
           text: >-
-            {{ range .Alerts -}}
-            *Environment:* {{ .Labels.cluster }}
-            *Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
+            \{{ range .Alerts -}}
+            *Environment:* {{ cluster }}
+            {{{{raw}}}}*Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
             *Description:* {{ .Annotations.description }}
             *Details:*
             {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
             {{ end }}
-            {{ end }}
+            {{ end }}{{{{/raw}}}}
           color: |-
-            {{ if eq .Status "firing" -}}
+            {{{{raw}}}{{ if eq .Status "firing" -}}
               {{ if eq .CommonLabels.severity "warning" -}}
                 warning
               {{- else if eq .CommonLabels.severity "fatal" -}}
@@ -48,7 +48,7 @@ spec:
               {{- end -}}
             {{ else -}}
             good
-            {{- end }}
+            {{- end }}{{{{/raw}}}}
   route:
     groupBy:
       - alertname
