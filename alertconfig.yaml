@@ -28,7 +28,7 @@ spec:
             {{ end }}
             {{ end }}{{{{/raw}}}}
           color: |-
-            {{{{raw}}}{{ if eq .Status "firing" -}}
+            {{{{raw}}}}{{ if eq .Status "firing" -}}
               {{ if eq .CommonLabels.severity "warning" -}}
                 warning
               {{- else if eq .CommonLabels.severity "fatal" -}}
