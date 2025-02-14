@@ -1,18 +1,18 @@
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: AlertmanagerConfig
 metadata:
-  name: dapla-stat-slack
-  namespace: dapla-stat
+  name: "{{ team }}-slack"
+  namespace: { { team } }
   labels:
-    alertmanagerConfig: dapla-stat-slack
+    alertmanagerConfig: "{{ team }}-slack"
 spec:
   receivers:
-    - name: dapla-stat-slack-receiver
+    - name: "{{ team }}-slack-receiver"
       slackConfigs:
         - apiURL:
             key: apiUrl
             name: slack-webhook
-          channel: "#team_statistikktjenester_nais_alerts"
+          channel: "{{ team }}-nais-alerts-{{ cluster }}"
           iconEmoji: ":scream:"
           username: "NAIS Alert"
           sendResolved: true
@@ -20,12 +20,9 @@ spec:
             [\{{ .Status | toUpper }}\{{ if eq .Status "firing" }}:\{{ .Alerts.Firing | len }}\{{ end }}] \{{ .CommonLabels.alertname }}
           text: >-
             \{{ range .Alerts -}}
-            *Environment:* {{ cluster }}
-            *Alert:* \{{ .Annotations.title }}\{{ if .Labels.severity }} - `\{{ .Labels.severity }}`\{{ end }}
-            *Description:* \{{ .Annotations.description }}
-            *Details:*
-            \{{ range .Labels.SortedPairs }} • *\{{ .Name }}:* `\{{ .Value }}`
-            \{{ end }}
+            *Environment:* {{ cluster }}\{{ "\n" }}
+            *Alert:* \{{ .Annotations.title }}\{{ if .Labels.severity }} - `\{{ .Labels.severity }}`\{{ end }}\{{ "\n" }}
+            \{{ if .Annotations.description }} - `\{{ .Annotations.description }}`\{{ "\n" }}\{{ end }}
             \{{ end }}
           color: |-
             \{{ if eq .Status "firing" -}}
@@ -55,8 +52,8 @@ spec:
     matchers:
       - name: "alertmanager_custom_config"
         matchType: "="
-        value: "dapla-stat"
+        value: "{{ team }}"
     groupInterval: 10s
     groupWait: 5s
-    receiver: dapla-stat-slack-receiver
+    receiver: "{{ team }}-slack-receiver"
     repeatInterval: 1h
