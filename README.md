@@ -3,8 +3,7 @@ Alert config for SSBs NAIS applications
 
 ## What is this?
 
-This reusable workflow deploys a Kubernetes resource called `AlertManagerConfig`
-in your team's namespace. The [AlertManagerConfig](https://docs.openshift.com/container-platform/4.11/rest_api/monitoring_apis/alertmanagerconfig-monitoring-coreos-com-v1beta1.html) resource defines configuration
+This repo provides a Kubernetes resource called `AlertManagerConfig`. The [AlertManagerConfig](https://docs.openshift.com/container-platform/4.11/rest_api/monitoring_apis/alertmanagerconfig-monitoring-coreos-com-v1beta1.html) resource defines configuration
 for all alerts in that namespace, including information as which Slack channel
 the alert sends to, and how the Slack message is composed. Contributions are welcome!
 
