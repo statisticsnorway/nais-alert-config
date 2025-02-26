@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1alpha1
 kind: AlertmanagerConfig
 metadata:
   name: "{{ team }}-slack"
-  namespace: { { team } }
+  namespace: "{{ team }}"
   labels:
     alertmanagerConfig: "{{ team }}-slack"
 spec:
