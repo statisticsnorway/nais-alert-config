@@ -81,3 +81,21 @@ jobs:
           VAR: cluster=prod,team=${{ env.TEAM }}
           DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443
 ```
+
+In additon, the alerts need to be augmented with additional labels to select the appropriate AlertManagerConfig. Take note of the two bottom labels:
+
+```yaml
+- alert: HighMemoryUsage
+          expr: sum by (namespace, pod) (container_memory_working_set_bytes{namespace="dapla-stat", pod=~"pseudo-service-.*"}) > 0.9 * sum by (namespace, pod) (kube_pod_container_resource_limits_memory_bytes{namespace="dapla-stat", pod=~"pseudo-service-.*"})
+          for: 5m
+          annotations:
+            title: "High memory usage detected"
+            consequence: "The service might experience instability due to high memory usage."
+            action: "Check memory utilization and consider increasing resources or optimizing the service."
+          labels:
+            service: some-service
+            namespace: some-team
+            severity: warning
+            alertmanager_custom_config: some-team
+            alert_type: custom
+```
