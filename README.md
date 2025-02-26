@@ -9,7 +9,7 @@ for all alerts in that namespace, including information as which Slack channel
 the alert sends to, and how the Slack message is composed. Contributions are welcome!
 
 In order to deploy this configuration, the deploy variables `team` (NAIS team) and `cluster` (Kubernetes cluster) needs to be set. The alerts are then
-sent to the channel <team>-nais-alerts-<cluster>. 
+sent to the channel \<team>-nais-alerts-\<cluster>. 
 
 Furthermore, since the `AlertManagerConfig` resource needs to be supplied to the 
 NAIS deploy action in the workflow caller, this repo needs to be checked out and fetched
