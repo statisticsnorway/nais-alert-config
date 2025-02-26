@@ -22,7 +22,9 @@ spec:
             \{{ range .Alerts -}}
             *Environment:* {{ cluster }}\{{ "\n" }}
             *Alert:* \{{ .Annotations.title }}\{{ if .Labels.severity }} - `\{{ .Labels.severity }}`\{{ end }}\{{ "\n" }}
-            \{{ if .Annotations.description }} - `\{{ .Annotations.description }}`\{{ "\n" }}\{{ end }}
+            \{{ if .Annotations.consequence }} - *Consequence:* `\{{ .Annotations.consequence }}`\{{ "\n" }}\{{ end }}
+            \{{ if .Annotations.action }} - *Action:* `\{{ .Annotations.action }}`\{{ "\n" }}\{{ end }}
+            \{{ if .Annotations.description }} - *Description:* `\{{ .Annotations.description }}`\{{ "\n" }}\{{ end }}
             \{{ end }}
           color: |-
             \{{ if eq .Status "firing" -}}
